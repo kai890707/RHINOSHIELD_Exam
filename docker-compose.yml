@@ -19,6 +19,9 @@ services:
 
     entrypoint: |
       sh -c "
+        apt-get update &&
+        apt-get install -y git zip unzip libzip-dev pkg-config &&
+        docker-php-ext-install zip &&
         curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer &&
         composer --version &&
         curl -sSL https://phar.phpunit.de/phpunit-9.phar -o /usr/local/bin/phpunit &&
