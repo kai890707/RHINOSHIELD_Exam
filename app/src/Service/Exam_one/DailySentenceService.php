@@ -1,12 +1,21 @@
 <?php 
-namespace App\Service;
+namespace App\Service\Exam_one;
+use App\Service\Exam_one\SentenceApiClientInterface;
 
 class DailySentenceService
 {
-    public function getSentence()
+    private $apiClient;
+
+    public function __construct(SentenceApiClientInterface $apiClient)
     {
-        return "Service test";
+        $this->apiClient = $apiClient;
+    }
+
+    public function getSentence(): string
+    {
+        return $this->apiClient->fetchSentence();
     }
 }
+
 
 ?>

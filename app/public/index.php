@@ -1,9 +1,10 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php';
 
-use App\Service\DailySentenceService;
+use App\Service\Exam_one\DailySentenceService;
+use App\Service\Exam_one\MetaphorsumApiClient;
 
-$service = new DailySentenceService();
+$client = new MetaphorsumApiClient();
+$service = new DailySentenceService($client);
 echo $service->getSentence();
 
 ?>
