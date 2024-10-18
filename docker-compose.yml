@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  php:
+    image: php:8.2-cli   
+    container_name: php_container
+    volumes:
+      - .:/var/www/html    
+    working_dir: /var/www/html   
+    tty: true           
+    stdin_open: true
+    networks:
+      - exam-network
+
+    command: bash -c "composer install && phpunit"
+
+    environment:
+      COMPOSER_ALLOW_SUPERUSER: 1
+
+    entrypoint: |
+      sh -c "
+        curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer &&
+        composer --version &&
+        curl -sSL https://phar.phpunit.de/phpunit-9.phar -o /usr/local/bin/phpunit &&
+        chmod +x /usr/local/bin/phpunit &&
+        phpunit --version &&
+        bash
+      "
+
+networks:
+  exam-network:
+    driver: bridge
