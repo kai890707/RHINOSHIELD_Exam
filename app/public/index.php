@@ -10,7 +10,19 @@ require __DIR__ . '/../vendor/autoload.php';
  */
 use App\Service\Exam_one\DailySentenceService;
 use App\Service\Exam_one\MetaphorsumApiClient;
+use App\Service\Exam_one\ItsthisforthatApiClient;
 
-$client = new MetaphorsumApiClient();
-$service = new DailySentenceService($client);
-echo $service->getSentence();
+/**
+ * MetaphorsumApiClient 使用範例
+ */
+$metaphorsumApiClient = new MetaphorsumApiClient();
+$metaphorsumservice = new DailySentenceService($metaphorsumApiClient);
+echo $metaphorsumservice->getSentence() . PHP_EOL;
+
+
+/**
+ * ItsthisforthatApiClient 使用範例
+ */
+$itsthisforthatApiClient = new ItsthisforthatApiClient();
+$itsthisforthatservice = new DailySentenceService($itsthisforthatApiClient);
+echo $itsthisforthatservice->getSentence() . PHP_EOL;
