@@ -1,25 +1,28 @@
 <?php
+
 namespace App\Service\Exam_one;
 
-use App\Service\Exam_one\SentenceApiClientInterface;
-use GuzzleHttp\Client;
+use App\Service\Exam_one\AbstractApiClient;
 
-class MetaphorsumApiClient implements SentenceApiClientInterface
+/**
+ * @author [Kai]
+ * @email [z85385637@gmail.com]
+ * @create date 2024-10-19 13:33:45
+ * @modify date 2024-10-19 13:33:45
+ * @desc Metaphorsum Strategy API
+ */
+class MetaphorsumApiClient extends AbstractApiClient
 {
-    private $client;
     protected $targetUrl = 'http://metaphorpsum.com/sentences/3';
 
     public function __construct()
     {
-        $this->client = new Client();
+        parent::__construct($this->targetUrl);
     }
 
-    public function fetchSentence(): string
+    protected function handleResponse(string $response): string
     {
-        $response = $this->client->get($this->targetUrl);
-        $data = $response->getBody()->getContents();
-        return trim($data);
+        // 假設回應是純文字，需要直接返回
+        return trim($response);
     }
 }
-
-?>

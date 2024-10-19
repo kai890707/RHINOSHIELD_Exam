@@ -1,30 +1,35 @@
-<?php 
+<?php
+
 namespace Tests\Service;
 
-use PHPUnit\Framework\TestCase;
 use App\Service\Exam_one\DailySentenceService;
-use App\Service\Exam_one\MetaphorsumApiClient;
-use App\Service\Exam_one\ItsthisforthatApiClient;
+use App\Service\Exam_one\SentenceApiClientInterface;
+use PHPUnit\Framework\TestCase;
 
+/**
+ * @author [Kai]
+ * @email [z85385637@gmail.com]
+ * @create date 2024-10-19 13:39:10
+ * @modify date 2024-10-19 13:39:10
+ * @desc DailySentenceService測試
+ */
 class DailySentenceServiceTest extends TestCase
 {
-    public function testGetData()
+    public function testGetSentenceReturnsCorrectSentence()
     {
-        // 建立 ApiClient 的模擬物件
-        $mockApiClient = $this->createMock(MetaphorsumApiClient::class);
+        // SentenceApiClientInterface 的模擬物件
+        $apiClientMock = $this->createMock(SentenceApiClientInterface::class);
 
-        // 設定模擬的 fetchData 方法回傳特定的值
-        $mockApiClient->expects($this->once())    // 預期 fetchData 會被呼叫一次
-                     ->method('fetchSentence')       // 指定 fetchData 方法
-                     ->willReturn('mocked data'); // 設定回傳的結果
+        // 設置模擬物件的 fetchSentence 方法
+        $apiClientMock->expects($this->once()) // 期望 fetchSentence 做一次就好
+                      ->method('fetchSentence')
+                      ->willReturn('This is a test sentence.');
 
-        // 使用模擬的 ApiClient 建立 DataService
-        $service = new DailySentenceService($mockApiClient);
+        // 使用模擬的 SentenceApiClientInterface 來創建 DailySentenceService (DI)
+        $dailySentenceService = new DailySentenceService($apiClientMock);
 
-        // 測試 getData 方法
-        $this->assertEquals('mocked data', $service ->getSentence());
+        $result = $dailySentenceService->getSentence();
+
+        $this->assertEquals('This is a test sentence.', $result);
     }
 }
-
-
-?>
