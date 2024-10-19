@@ -13,7 +13,7 @@ use App\Service\Exam_one\AbstractApiClient;
  */
 class ItsthisforthatApiClient extends AbstractApiClient
 {
-    protected $targetUrl = 'https://itsthisforthat.com/api.php?text';
+    protected string $targetUrl = "https://itsthisforthat.com/api.php?text";
 
     public function __construct()
     {

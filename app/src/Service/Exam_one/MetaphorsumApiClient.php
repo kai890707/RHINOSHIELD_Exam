@@ -13,7 +13,7 @@ use App\Service\Exam_one\AbstractApiClient;
  */
 class MetaphorsumApiClient extends AbstractApiClient
 {
-    protected $targetUrl = 'http://metaphorpsum.com/sentences/3';
+    protected string $targetUrl = "http://metaphorpsum.com/sentences/3";
 
     public function __construct()
     {
