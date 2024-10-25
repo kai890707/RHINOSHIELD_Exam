@@ -50,9 +50,17 @@ docker-compose down
 位於`app/testing`
 
 ## 檔案運行
-若欲執行相關類別請於`index.php`中撰寫與使用，請執行
+- 若欲執行相關類別請於`index.php`中撰寫與使用，請執行
 ```bash
 docker-compose exec php php app/public/index.php
+```
+- 若欲執行測試相關類別，請執行
+```bash
+docker-compose exec php app/vendor/bin/phpunit  app/tests/{filename}
+```
+例如執行`AbstractApiClientTest.php`測試，則執行
+```bash
+docker-compose exec php app/vendor/bin/phpunit  app/tests/AbstractApiClientTest.php
 ```
 
 ## 注意事項
