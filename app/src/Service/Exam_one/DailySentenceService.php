@@ -3,21 +3,33 @@
 namespace App\Service\Exam_one;
 
 use App\Service\Exam_one\SentenceApiClientInterface;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ServerException;
 
 /**
  * @author [Kai]
  * @email [z85385637@gmail.com]
  * @create date 2024-10-19 13:32:54
  * @modify date 2024-10-19 13:32:54
- * @desc Dependency Injection容器
+ * @desc 題目1 - 單純取得字串，不做任何邏輯抽象
  */
 class DailySentenceService
 {
-    private $apiClient;
+    private $httpClient;
 
-    public function __construct(SentenceApiClientInterface $apiClient)
+    /**
+     * 建構方法
+     * @param \GuzzleHttp\Client|null $httpClient
+     * @desc 提供更彈性地使用該類別，因此在參數中加入httpClient，也方便做測試
+     */
+    public function __construct(Client $httpClient = null)
     {
-        $this->apiClient = $apiClient;
+        $this->httpClient = $httpClient ?: new Client([
+            'base_uri' => 'http://metaphorpsum.com',
+            'timeout'  => 2.0
+        ]);
     }
 
     /**
@@ -26,6 +38,30 @@ class DailySentenceService
      */
     public function getSentence(): string
     {
-        return $this->apiClient->fetchSentence();
+        try {
+            $response = $this->httpClient->get('/sentences/3');
+
+            if ($response->getStatusCode() !== 200) {
+                throw new \Exception("ERROR: Response code is not 200. Code: " . $response->getStatusCode());
+            }
+
+            $data = $response->getBody()->getContents();
+
+            if (empty($data)) {
+                throw new \Exception("ERROR: API returned empty data.");
+            }
+
+            
+            return trim($data);
+
+        } catch (ClientException $e) {
+            throw new \Exception("ERROR: Client side error (400)." . $e->getMessage());
+        } catch (ServerException $e) {
+            throw new \Exception("ERROR: Server side error (500)." . $e->getMessage());
+        } catch (RequestException $e) {
+            throw new \Exception("ERROR: HTTP request failed." . $e->getMessage());
+        } catch (\Exception $e) {
+            throw new \Exception("ERROR: Unknown error." . $e->getMessage());
+        }
     }
 }
