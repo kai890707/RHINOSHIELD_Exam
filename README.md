@@ -24,6 +24,7 @@ docker-compose up --build
 - 安裝 zip PHP 擴展。
 - 全域安裝 Composer。
 - 全域安裝 PHPUnit。
+- 啟用主機 8081 port，並映射到容器的 8080 port，因此可透過 `http://localhost:8081/` 進行瀏覽
 3. 運行 Composer
 當容器啟動並運行後，您可以在容器內運行 Composer 指令。
 安裝專案的依賴：
@@ -50,10 +51,27 @@ docker-compose down
 位於`app/testing`
 
 ## 檔案運行
-- 若欲執行相關類別請於`index.php`中撰寫與使用，請執行
+- 若欲執行`DailySentence`類別，請執行`index.php`
 ```bash
 docker-compose exec php php app/public/index.php
 ```
+亦可於瀏覽器搜尋
+```
+http://localhost:8081/
+or 
+http://localhost:8081/index.php
+```
+
+- 題目一進階題為`SentenceService`類別，若欲執行題目一進階題，請執行`sentenceService.php`
+```bash
+docker-compose exec php php app/public/sentenceService.php
+```
+亦可於瀏覽器搜尋
+```
+http://localhost:8081/sentenceService.php
+```
+
+## 測試運行
 - 若欲執行測試相關類別，請執行
 ```bash
 docker-compose exec php app/vendor/bin/phpunit  app/tests/{filename}
