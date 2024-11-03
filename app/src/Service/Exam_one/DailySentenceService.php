@@ -2,7 +2,6 @@
 
 namespace App\Service\Exam_one;
 
-use App\Service\Exam_one\SentenceApiClientInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;

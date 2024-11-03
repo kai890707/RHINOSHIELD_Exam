@@ -50,6 +50,9 @@ docker-compose down
 3. 測試
 位於`app/testing`
 
+## UML 
+![UML](./UML.png)
+
 ## 檔案運行
 - 若欲執行`DailySentence`類別，請執行`index.php`
 ```bash

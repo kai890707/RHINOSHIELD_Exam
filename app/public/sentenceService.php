@@ -12,7 +12,6 @@ use App\Service\Exam_one\SentenceService;
 use App\Service\Exam_one\MetaphorsumApiClient;
 use App\Service\Exam_one\ItsthisforthatApiClient;
 
-// 考量到終端與網頁顯示，因此全用\n進行換行
 
 #-----------------------題目1進階-使用抽換依賴類別實現題目需求-----------------------------
 /**
