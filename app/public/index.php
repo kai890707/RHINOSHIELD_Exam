@@ -10,8 +10,6 @@ require __DIR__ . '/../vendor/autoload.php';
  */
 use App\Service\Exam_one\DailySentenceService;
 
-// 考量到終端與網頁顯示，因此全用\n進行換行
-
 #----------------------------------題目1------------------------------------------------
 $dailySentenceService = new DailySentenceService();
 echo "dailySentence result : " . $dailySentenceService->getSentence();

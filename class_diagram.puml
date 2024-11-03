@@ -1,0 +1,43 @@
+@startuml
+skinparam classAttributeIconSize 0
+interface SentenceApiClientInterface {
+    + fetchSentence(): string
+}
+
+abstract class AbstractApiClient {
+    - client: GuzzleHttp\\Client
+    - targetUrl: string
+    + fetchSentence(): string
+    # handleResponse(response: string): string
+}
+note right of AbstractApiClient: GuzzleHttp\\Client 在\n AbstractApiClient 建構方法建立
+
+class ItsthisforthatApiClient {
+    + handleResponse(response: string): string
+}
+
+class MetaphorsumApiClient {
+    + handleResponse(response: string): string
+}
+
+class DailySentenceService {
+    - httpClient: GuzzleHttp\\Client
+    + getSentence(): string
+}
+note left of DailySentenceService: 題目一類別，僅作為API fetch
+
+class SentenceService {
+    - apiClient: SentenceApiClientInterface
+    + getSentence(): string
+}
+
+
+class "GuzzleHttp\\Client" as GuzzleClient
+
+AbstractApiClient ..> GuzzleClient 
+SentenceApiClientInterface <|.. AbstractApiClient : <<實作>>
+AbstractApiClient <|-- ItsthisforthatApiClient : <<繼承>>
+AbstractApiClient <|-- MetaphorsumApiClient : <<繼承>>
+SentenceService ..> SentenceApiClientInterface: <<依賴>>
+DailySentenceService ..> GuzzleClient
+@enduml
