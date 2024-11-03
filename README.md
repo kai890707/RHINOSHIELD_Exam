@@ -53,6 +53,25 @@ docker-compose down
 ## UML 
 ![UML](./UML.png)
 
+### 類別與介面說明
+- `DailySentenceService`
+為題目一作答，實現特定的 `API fetch` 。
+
+- `SentenceApiClientInterface`
+為一介面，定義了需要實作的方法，確保所有實作這個介面的類別都具有一致的行為，作為依賴控制參照。
+
+- `AbstractApiClient`
+為一抽象類別，實作 `SentenceApiClientInterface`，並提供一個模板來讓子類別實作特定細節。設計遵循開放封閉原則（OCP），既可以擴展新的功能而無需修改基礎類別邏輯，又能夠提供模板方法來強制子類別實作某些行為，保持程式碼結構的一致性和可擴展性。
+`fetchSentence` 方法作為主要的HTTP行為發送與Exception判斷，封裝了通用邏輯，如 API 請求或基礎操作，讓子類別可以專注於實作與其相關的具體邏輯。。
+且定義了抽象方法 `handleResponse`，以便子類別實作其特定的回應處理邏輯，例如 JSON Format 或業務處理，避免在所有具體實作中重複大量程式碼。
+
+- `MetaphorsumApiClient` 與 `ItsthisforthatApiClient`
+這些類別都繼承了 `AbstractApiClient` ，並專注於特定的功能實現，例如 API 響應的處理等。
+
+- `SentenceService`
+接收 `SentenceApiClientInterface` 的具體實現（例如 `MetaphorsumApiClient` 與 `ItsthisforthatApiClient`）作為建構方法參數，實現了依賴注入，增強了類別的靈活性和可測試性。
+且 `SentenceService` 不依賴於具體的 `ApiClient` 實現，而是依賴於 `SentenceApiClientInterface`，符合依賴反轉原則。
+
 ## 檔案運行
 - 若欲執行`DailySentence`類別，請執行`index.php`
 ```bash
